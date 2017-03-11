@@ -51,6 +51,7 @@ angular.module('app', [])
     .controller('feed', ['$http', '$location', function($http, $location) {
         var self = this;
         self.activeTab = 'feed';
+        self.page = 1;
         var social_network = $location.search().social_network;
         $http.get(social_network ? '/posts/' + social_network + '/latest' : '/posts/latest').success(function(data) {
             self.posts = data;
@@ -64,6 +65,22 @@ angular.module('app', [])
             }).error(function(data) {
                 console.log('Logout failed');
                 self.authenticated = false;
+            });
+        };
+        self.previousPage = function() {
+            self.posts = [];
+            $http.get('/posts/page/' + (++self.page)).success(function(data) {
+                self.posts = data;
+            }).error(function() {
+                console.log('Error getting posts page #' + self.page);
+            });
+        };
+        self.nextPage = function() {
+            self.posts = [];
+            $http.get('/posts/page/' + (--self.page)).success(function(data) {
+                self.posts = data;
+            }).error(function() {
+                console.log('Error getting posts page #' + self.page);
             });
         };
     }]);

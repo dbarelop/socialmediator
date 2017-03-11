@@ -28,7 +28,23 @@ public class TwitterServiceImpl implements SocialNetworkService {
             AccessToken accessToken = (AccessToken) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.twitter);
             if (accessToken != null) {
                 twitter.setOAuthAccessToken(accessToken);
-                List<Status> statuses = twitter.getHomeTimeline();
+                List<Status> statuses = twitter.getHomeTimeline(new Paging(1, SocialNetworkAggregatorService.PAGE_SIZE));
+                return statuses.stream().map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
+            }
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SocialNetworkPost> getPosts(Principal principal, int page) {
+        Twitter twitter = TwitterFactory.getSingleton();
+        try {
+            AccessToken accessToken = (AccessToken) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.twitter);
+            if (accessToken != null) {
+                twitter.setOAuthAccessToken(accessToken);
+                List<Status> statuses = twitter.getHomeTimeline(new Paging(page, SocialNetworkAggregatorService.PAGE_SIZE));
                 return statuses.stream().map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
             }
         } catch (TwitterException e) {
@@ -44,7 +60,7 @@ public class TwitterServiceImpl implements SocialNetworkService {
             AccessToken accessToken = (AccessToken) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.twitter);
             if (accessToken != null) {
                 twitter.setOAuthAccessToken(accessToken);
-                List<Status> statuses = twitter.getHomeTimeline();
+                List<Status> statuses = twitter.getHomeTimeline(new Paging(1, SocialNetworkAggregatorService.PAGE_SIZE));
                 return statuses.stream().filter(t -> Arrays.stream(t.getHashtagEntities()).anyMatch(h -> h.getText().equals(tag)))
                         .map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
             }

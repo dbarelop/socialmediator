@@ -52,7 +52,27 @@ public class GoogleServiceImpl implements SocialNetworkService {
                 Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
                 // TODO: this retrieves the user's posts, but not their friends'
                 // Possible solution: iterate friends list and get public collections
-                Plus.Activities.List listActivities = plus.activities().list("+google", "public");
+                Plus.Activities.List listActivities = plus.activities().list("+google", "public").setMaxResults(Integer.toUnsignedLong(SocialNetworkAggregatorService.PAGE_SIZE));
+                ActivityFeed activityFeed = listActivities.execute();
+                List<Activity> activities = activityFeed.getItems();
+                // https://developers.google.com/+/web/api/rest/latest/activities/list
+                return activities.stream().map(GoogleSocialNetworkPost::new).collect(Collectors.toList());
+            }
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SocialNetworkPost> getPosts(Principal principal, int page) {
+        Credential credential = (Credential) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.google);
+        try {
+            if (credential != null) {
+                Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
+                // TODO: this retrieves the user's posts, but not their friends'
+                // Possible solution: iterate friends list and get public collections
+                Plus.Activities.List listActivities = plus.activities().list("+google", "public").setMaxResults(Integer.toUnsignedLong(SocialNetworkAggregatorService.PAGE_SIZE)).setPageToken(Integer.toString(page));
                 ActivityFeed activityFeed = listActivities.execute();
                 List<Activity> activities = activityFeed.getItems();
                 // https://developers.google.com/+/web/api/rest/latest/activities/list

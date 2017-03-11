@@ -31,6 +31,11 @@ public class TimelineController {
         return socialNetworksService.getLatestPosts(principal);
     }
 
+    @GetMapping("/posts/page/{page}")
+    public List<SocialNetworkPost> getPosts(Principal principal, @PathVariable("page") int page) {
+        return socialNetworksService.getPosts(principal, page);
+    }
+
     @GetMapping("/posts/{socialNetwork}/latest")
     public List<SocialNetworkPost> getLatestPosts(Principal principal, @PathVariable("socialNetwork") SocialNetwork socialNetwork) {
         switch (socialNetwork) {
