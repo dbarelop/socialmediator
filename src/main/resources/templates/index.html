@@ -39,6 +39,14 @@
                     console.log("Twitter auth failed");
                 });
             };
+            self.authorizeFacebook = function() {
+                $http.get("/auth/facebook").success(function(data) {
+                    $window.location.href = data.url;
+                }).error(function(data) {
+                    console.log(data);
+                    console.log("Facebook auth failed");
+                });
+            };
         });
     </script>
 </head>
@@ -55,7 +63,8 @@
         <ul>
             <li ng-repeat="sn in home.socialNetworks"><a href="/posts/{{sn}}/latest">{{sn}}</a></li>
         </ul>
-        <button ng-click="home.authorizeTwitter()" class="btn btn-default">Add Twitter</button>
+        <button ng-click="home.authorizeTwitter()" class="btn btn-default">Authorize Twitter</button>
+        <button ng-click="home.authorizeFacebook()" class="btn btn-default">Authorize Facebook</button>
     </div>
 </body>
 </html>

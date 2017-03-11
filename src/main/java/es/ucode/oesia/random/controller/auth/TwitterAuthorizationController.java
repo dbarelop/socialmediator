@@ -25,7 +25,7 @@ public class TwitterAuthorizationController {
         if (twitterService.isAuthorized(principal)) {
             return new ResponseEntity<>("Already authorized", HttpStatus.OK);
         } else {
-            String url = twitterService.getRequestToken().getAuthorizationURL();
+            String url = twitterService.getAuthorizationURL();
             return new ResponseEntity<>(new AuthorizationURL(url), HttpStatus.OK);
         }
     }
@@ -40,15 +40,4 @@ public class TwitterAuthorizationController {
         return new ResponseEntity<>(h, HttpStatus.TEMPORARY_REDIRECT);
     }
 
-    private class AuthorizationURL {
-        private String url;
-
-        AuthorizationURL(String url) {
-            this.url = url;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-    }
 }
