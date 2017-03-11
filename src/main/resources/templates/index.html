@@ -6,25 +6,27 @@
   <title>Random Project</title>
 
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 </head>
 <body ng-app="app" ng-controller="home as home">
  
-  <!-- Navbar goes here -->
+ 
+     <!--contenido-->
+    <div class="row">
 
-    <!-- Page Layout here -->
-     
-    <div class="row">
-<a  data-activates="slide-out"  class="button-collapse"><i id="button-nav" class="material-icons grey-text">menu</i></a>
+    <a data-activates="slide-out"  class="button-collapse"><i id="button-nav" class="material-icons grey-text">menu</i></a>
+
     <div id="separador1" class="col s9 push-s3 blue-grey lighten-5 ">
-    <!--el panel de agregar-->
+    
+
     <div class="row">
+    <!--el panel de agregar-->
     <!--
     <div class="card-panel col s6 offset-s3"><span class="black-text text-darken-2"><h5 class="center-align"><i class="material-icons">add</i>Agregar</h5></span></div>-->
-    <!--este es el panel de MUESTRA DE LOS POSTS-->
+    
     
       <!-- este es el panel de subir un POST-->
       <div class="row">
@@ -50,6 +52,8 @@
           </div>
         </div>
       </div>
+      <!--FIN SUBIR POSTS-->
+      <!-- VER POSTS-->
         <div class="col s12">
           <div class="card ">
             <div class="card-content black-text">
@@ -69,7 +73,9 @@
             </div>
           </div>
         </div>
-      </div>
+      
+      <!--FIN VER POSTTS-->
+
       <!--log in-->
       <div class="card " ng-show="!home.authenticated">
             <div class="card-content black-text">
@@ -91,6 +97,7 @@
          </div>
           </div>
           </div>
+          <!--FIN LOG IN-->
         
 
 
