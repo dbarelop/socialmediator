@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Posts feed</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}" />
+
+    <script type="text/javascript" th:src="@{/webjars/angularjs/1.4.3/angular.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/app/app.js}"></script>
+</head>
+<body ng-app="app" ng-controller="feed as feed">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel panel-default" ng-repeat="p in feed.posts">
+                    <div class="panel-body">{{p.text}}</div>
+                    <div class="panel-footer">
+                        <span class="badge badge-default" ng-repeat="t in p.tags">{{t}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

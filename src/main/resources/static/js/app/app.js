@@ -21,9 +21,10 @@ angular.module("app", []).controller("home", function($http, $location, $window)
             self.authenticated = false;
         });
     };
-    self.authorizeTwitter = function() {
+    self.authorizeTwitter = function(name) {
         $http.get("/auth/twitter").success(function(data) {
             $window.location.href = data.url;
+            createChips(name);
         }).error(function(data) {
             console.log(data);
             console.log("Twitter auth failed");
