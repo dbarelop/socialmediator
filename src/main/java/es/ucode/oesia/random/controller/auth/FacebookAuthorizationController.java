@@ -32,7 +32,7 @@ public class FacebookAuthorizationController {
     }
 
     @GetMapping("/auth/facebook/callback")
-    public ResponseEntity<Void> doAuthoriza(Principal principal,
+    public ResponseEntity<Void> doAuthorize(Principal principal,
                                             @RequestParam("code") String oAuthCode) throws FacebookException {
         facebookService.authorize(principal, oAuthCode);
         HttpHeaders h = new HttpHeaders();

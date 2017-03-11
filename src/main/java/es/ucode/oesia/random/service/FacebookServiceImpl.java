@@ -29,6 +29,8 @@ public class FacebookServiceImpl implements SocialNetworkService {
             AccessToken accessToken = (AccessToken) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.facebook);
             if (accessToken != null) {
                 fb.setOAuthAccessToken(accessToken);
+                // TODO: this retrieves the current user's posts
+                // Currently there's no way to get the user's feed
                 ResponseList<Post> posts = fb.getFeed();
                 return posts.stream().map(FacebookSocialNetworkPost::new).collect(Collectors.toList());
             }
