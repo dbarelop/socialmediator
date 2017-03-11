@@ -41,7 +41,7 @@ public class SocialNetworkAggregatorService  implements SocialNetworkService {
         if (twitter != null) {
             res.addAll(twitter);
         }
-        res.sort(Comparator.comparing(SocialNetworkPost::getDate));
+        res.sort(Comparator.comparing(SocialNetworkPost::getDate).reversed());
         return res.stream().limit(PAGE_SIZE).collect(Collectors.toList());
     }
 
@@ -70,7 +70,7 @@ public class SocialNetworkAggregatorService  implements SocialNetworkService {
             }
             noMorePosts = new boolean[]{ facebook == null, google == null, twitter == null };
         }
-        res.sort(Comparator.comparing(SocialNetworkPost::getDate));
+        res.sort(Comparator.comparing(SocialNetworkPost::getDate).reversed());
         return res.stream().skip(PAGE_SIZE * (page - 1)).limit(PAGE_SIZE).collect(Collectors.toList());
     }
 
@@ -89,7 +89,8 @@ public class SocialNetworkAggregatorService  implements SocialNetworkService {
         if (twitter != null) {
             res.addAll(twitter);
         }
-        return res;
+        res.sort(Comparator.comparing(SocialNetworkPost::getDate).reversed());
+        return res.stream().limit(PAGE_SIZE).collect(Collectors.toList());
     }
 
     @Override
