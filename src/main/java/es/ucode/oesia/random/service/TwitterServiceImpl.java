@@ -1,6 +1,6 @@
 package es.ucode.oesia.random.service;
 
-import es.ucode.oesia.random.domain.Post;
+import es.ucode.oesia.random.domain.SocialNetworkPost;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class TwitterServiceImpl implements SocialNetworkService {
 
     @Override
-    public List<Post> getLatestPosts() {
+    public List<SocialNetworkPost> getLatestPosts() {
         // TODO: implement
         return null;
     }

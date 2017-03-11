@@ -1,5 +1,5 @@
 package es.ucode.oesia.random.domain;
 
-public abstract class Post {
+public abstract class SocialNetworkPost {
     // TODO: define
 }
