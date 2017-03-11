@@ -1,8 +1,11 @@
 package es.ucode.oesia.random.domain;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class SocialNetworkPost {
     private String text;
@@ -58,5 +61,15 @@ public abstract class SocialNetworkPost {
 
     public void setCreator(SocialNetworkUser creator) {
         this.creator = creator;
+    }
+
+    List<String> getTags(String text) {
+        Pattern p = Pattern.compile("#(\\S+)");
+        Matcher m = p.matcher(text);
+        List<String> res = new ArrayList<>();
+        while (m.find()) {
+            res.add(m.group(1));
+        }
+        return res;
     }
 }

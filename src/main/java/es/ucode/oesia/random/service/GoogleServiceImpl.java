@@ -11,7 +11,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.plus.Plus;
 import com.google.api.services.plus.PlusScopes;
+import com.google.api.services.plus.model.Activity;
+import com.google.api.services.plus.model.ActivityFeed;
 import com.google.api.services.plus.model.Person;
+import es.ucode.oesia.random.domain.GoogleSocialNetworkPost;
 import es.ucode.oesia.random.domain.SocialNetwork;
 import es.ucode.oesia.random.domain.SocialNetworkPost;
 import es.ucode.oesia.random.repository.UserSocialNetworksRepository;
@@ -27,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GoogleServiceImpl implements SocialNetworkService {
@@ -48,7 +52,11 @@ public class GoogleServiceImpl implements SocialNetworkService {
                 Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
                 // TODO: this retrieves the user's posts, but not their friends'
                 // Possible solution: iterate friends list and get public collections
-                plus.activities().list("me", "public");
+                Plus.Activities.List listActivities = plus.activities().list("+google", "public");
+                ActivityFeed activityFeed = listActivities.execute();
+                List<Activity> activities = activityFeed.getItems();
+                // https://developers.google.com/+/web/api/rest/latest/activities/list
+                return activities.stream().map(GoogleSocialNetworkPost::new).collect(Collectors.toList());
             }
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package es.ucode.oesia.random.controller;
 import es.ucode.oesia.random.domain.SocialNetwork;
 import es.ucode.oesia.random.domain.SocialNetworkPost;
 import es.ucode.oesia.random.service.FacebookServiceImpl;
+import es.ucode.oesia.random.service.GoogleServiceImpl;
 import es.ucode.oesia.random.service.SocialNetworkAggregatorService;
 import es.ucode.oesia.random.service.TwitterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class TimelineController {
     private TwitterServiceImpl twitterService;
     @Autowired
     private FacebookServiceImpl facebookService;
+    @Autowired
+    private GoogleServiceImpl googleService;
 
     @GetMapping("/posts/latest")
     public List<SocialNetworkPost> getLatestPosts() {
@@ -38,6 +41,8 @@ public class TimelineController {
                 return twitterService.getLatestPosts(principal);
             case facebook:
                 return facebookService.getLatestPosts(principal);
+            case google:
+                return googleService.getLatestPosts(principal);
         }
         return null;
     }

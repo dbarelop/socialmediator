@@ -36,9 +36,8 @@ public class GoogleAuthorizationController {
     public ResponseEntity<Void> doAuthorize(Principal principal,
                                             @RequestParam("code") String authorizationCode) throws IOException, GeneralSecurityException {
         googleService.authorize(principal, authorizationCode);
-
         HttpHeaders h = new HttpHeaders();
         h.setLocation(URI.create("/"));
-        return new ResponseEntity<>(h, HttpStatus.OK);
+        return new ResponseEntity<>(h, HttpStatus.TEMPORARY_REDIRECT);
     }
 }
