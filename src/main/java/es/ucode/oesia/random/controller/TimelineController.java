@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 public class TimelineController {
 
-    //@Autowired
+    @Autowired
     private SocialNetworkAggregatorService socialNetworksService;
     @Autowired
     private TwitterServiceImpl twitterService;
