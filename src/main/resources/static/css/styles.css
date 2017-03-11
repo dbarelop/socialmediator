@@ -1,3 +1,14 @@
 body {
     padding-top: 70px;
 }
+
+.twitter {
+    background-color: #55acee;
+}
+
+.facebook {
+    background-color: #3b5998;
+}
+.google {
+    background-color: #dd4b39;
+}
