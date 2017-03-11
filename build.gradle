@@ -34,6 +34,9 @@ dependencies {
 
     compile('org.twitter4j:twitter4j-core:4.0.6')
     compile('org.facebook4j:facebook4j-core:2.4.8')
+	compile('com.google.apis:google-api-services-plus:v1-rev503-1.22.0')
+	compile('com.google.oauth-client:google-oauth-client-java6:1.22.0')
+	compile('com.google.oauth-client:google-oauth-client-jetty:1.22.0')
 
 	compile('org.webjars:bootstrap:3.2.0')
 	compile('org.webjars:jquery:2.1.1')

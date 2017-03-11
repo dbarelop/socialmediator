@@ -38,6 +38,14 @@ angular.module('app', [])
                 console.log('Facebook auth failed');
             });
         };
+        self.authorizeGoogle = function() {
+            $http.get('/auth/google').success(function(data) {
+                $window.location.href = data.url;
+            }).error(function(data) {
+                console.log(data);
+                console.log('Google auth failed');
+            });
+        };
     }])
     .controller('feed', ['$http', '$location', function($http, $location) {
         var self = this;
