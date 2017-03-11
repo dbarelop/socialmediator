@@ -1,46 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"></meta>
     <title>SocialMediator</title>
 
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}" />
 
-    <script type="text/javascript" src="/webjars/angularjs/1.4.3/angular.min.js"></script>
-    <script type="text/javascript">
-        angular.module("app", []).controller("home", function($http, $location, $window) {
-            var self = this;
-            $http.get("/user").success(function(data) {
-                self.user = data.userAuthentication.details.name;
-                self.authenticated = true;
-                $http.get("/user/socialnetworks").success(function(data) {
-                    self.socialNetworks = data;
-                }).error(function() {
-                    console.log("Error getting user's social networks");
-                });
-            }).error(function() {
-                self.user = "N/A";
-                self.authenticated = false;
-            });
-            self.logout = function() {
-                $http.post("/logout", {}).success(function() {
-                    self.authenticated = false;
-                    $location.path("/");
-                }).error(function(data) {
-                    console.log("Logout failed");
-                    self.authenticated = false;
-                });
-            };
-            self.authorizeTwitter = function() {
-                $http.get("/auth/twitter").success(function(data) {
-                    $window.location.href = data.url;
-                }).error(function(data) {
-                    console.log(data);
-                    console.log("Twitter auth failed");
-                });
-            };
-        });
-    </script>
+    <script type="text/javascript" th:src="@{/webjars/angularjs/1.4.3/angular.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/app/app.js}"></script>
 </head>
 <body ng-app="app" ng-controller="home as home">
     <div class="container" ng-show="!home.authenticated">
