@@ -41,6 +41,8 @@ dependencies {
 	compile('org.webjars:bootstrap:3.2.0')
 	compile('org.webjars:jquery:2.1.1')
     compile('org.webjars:angularjs:1.4.3')
+	compile('org.webjars:font-awesome:4.7.0')
+	compile('org.webjars.bower:bootstrap-social:5.0.0')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
