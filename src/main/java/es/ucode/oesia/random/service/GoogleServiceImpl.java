@@ -42,7 +42,17 @@ public class GoogleServiceImpl implements SocialNetworkService {
 
     @Override
     public List<SocialNetworkPost> getLatestPosts(Principal principal) {
-        // TODO: implement
+        Credential credential = (Credential) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.google);
+        try {
+            if (credential != null) {
+                Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
+                // TODO: this retrieves the user's posts, but not their friends'
+                // Possible solution: iterate friends list and get public collections
+                plus.activities().list("me", "public");
+            }
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -74,11 +84,6 @@ public class GoogleServiceImpl implements SocialNetworkService {
 
         Credential credential = flow.createAndStoreCredential(tokenResponse, principal.getName());
 
-        Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
-        Person profile = plus.people().get("me").execute();
-        System.out.println("ID: " + profile.getId());
-        System.out.println("Name: " + profile.getDisplayName());
-        System.out.println("Image URL: " + profile.getImage().getUrl());
-        System.out.println("Profile URL: " + profile.getUrl());
+        userSocialNetworksRepository.addSocialNetwork(principal.getName(), SocialNetwork.google, credential);
     }
 }
