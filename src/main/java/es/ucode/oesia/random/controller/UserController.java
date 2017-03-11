@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/user/socialnetworks")
     public Set<SocialNetwork> userSocialNetworks(Principal principal) {
-        Map<SocialNetwork, String> socialNetworksMap = socialNetworksRepository.findByUser(principal.getName());
+        Map<SocialNetwork, Object> socialNetworksMap = socialNetworksRepository.findByUser(principal.getName());
         return socialNetworksMap != null ? socialNetworksMap.keySet() : new HashSet<>();
     }
 }

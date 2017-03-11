@@ -9,19 +9,23 @@ import java.util.Map;
 
 @Repository
 public class UserSocialNetworksRepository {
-    private Map<String, Map<SocialNetwork, String>> authTokens = new HashMap<>();
+    private Map<String, Map<SocialNetwork, Object>> authTokens = new HashMap<>();
 
-    public void addSocialNetwork(String user, SocialNetwork socialNetwork, String authToken) {
+    public void addSocialNetwork(String user, SocialNetwork socialNetwork, Object authToken) {
         if (authTokens.containsKey(user)) {
             authTokens.get(user).put(socialNetwork, authToken);
         } else {
-            Map<SocialNetwork, String> authMap = new HashMap<>();
+            Map<SocialNetwork, Object> authMap = new HashMap<>();
             authMap.put(socialNetwork, authToken);
             authTokens.put(user, authMap);
         }
     }
 
-    public Map<SocialNetwork,String> findByUser(String user) {
+    public Map<SocialNetwork,Object> findByUser(String user) {
         return authTokens.get(user);
+    }
+
+    public Object findByUserAndSocialNetwork(String user, SocialNetwork socialNetwork) {
+        return authTokens.containsKey(user) ? authTokens.get(user).get(socialNetwork) : null;
     }
 }

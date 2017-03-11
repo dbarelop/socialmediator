@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"></meta>
-    <title>Sample index</title>
+    <title>SocialMediator</title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.2.0/css/bootstrap.min.css" />
 
     <script type="text/javascript" src="/webjars/angularjs/1.4.3/angular.min.js"></script>
     <script type="text/javascript">
@@ -12,7 +14,6 @@
                 self.user = data.userAuthentication.details.name;
                 self.authenticated = true;
                 $http.get("/user/socialnetworks").success(function(data) {
-                    console.log(data);
                     self.socialNetworks = data;
                 }).error(function() {
                     console.log("Error getting user's social networks");
@@ -35,7 +36,7 @@
                     $window.location.href = data.url;
                 }).error(function(data) {
                     console.log(data);
-                    console.log("Auth Twitter failed");
+                    console.log("Twitter auth failed");
                 });
             };
         });
@@ -48,13 +49,13 @@
     <div class="container" ng-show="home.authenticated">
         Logged in as: <span ng-bind="home.user"></span>
         <div>
-            <button ng-click="home.logout()" class="btn btn-primary">Logout</button>
+            <button ng-click="home.logout()" class="btn btn-default">Logout</button>
         </div>
         Registered social networks:
         <ul>
-            <li ng-repeat="sn in home.socialNetworks">{{sn}}</li>
+            <li ng-repeat="sn in home.socialNetworks"><a href="/posts/{{sn}}/latest">{{sn}}</a></li>
         </ul>
-        <button ng-click="home.authorizeTwitter()">Add Twitter</button>
+        <button ng-click="home.authorizeTwitter()" class="btn btn-default">Add Twitter</button>
     </div>
 </body>
 </html>
