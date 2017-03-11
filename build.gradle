@@ -42,6 +42,8 @@ dependencies {
     
     compile group: 'org.apache.lucene', name: 'lucene-core', version: '6.4.2'
 
+    //compile 'org.apache.lucene:lucene-queryparser:6.4.2'
+    
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
