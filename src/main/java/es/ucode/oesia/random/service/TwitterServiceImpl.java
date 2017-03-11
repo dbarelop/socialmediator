@@ -6,14 +6,12 @@ import es.ucode.oesia.random.domain.TwitterSocialNetworkPost;
 import es.ucode.oesia.random.repository.UserSocialNetworksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +30,23 @@ public class TwitterServiceImpl implements SocialNetworkService {
                 twitter.setOAuthAccessToken(accessToken);
                 List<Status> statuses = twitter.getHomeTimeline();
                 return statuses.stream().map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
+            }
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<SocialNetworkPost> getLatestPostsByTag(Principal principal, String tag) {
+        Twitter twitter = TwitterFactory.getSingleton();
+        try {
+            AccessToken accessToken = (AccessToken) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.twitter);
+            if (accessToken != null) {
+                twitter.setOAuthAccessToken(accessToken);
+                List<Status> statuses = twitter.getHomeTimeline();
+                return statuses.stream().filter(t -> Arrays.stream(t.getHashtagEntities()).anyMatch(h -> h.getText().equals(tag)))
+                        .map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
             }
         } catch (TwitterException e) {
             e.printStackTrace();

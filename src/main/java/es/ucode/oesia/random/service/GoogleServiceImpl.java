@@ -65,6 +65,26 @@ public class GoogleServiceImpl implements SocialNetworkService {
     }
 
     @Override
+    public List<SocialNetworkPost> getLatestPostsByTag(Principal principal, String tag) {
+        Credential credential = (Credential) userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.google);
+        try {
+            if (credential != null) {
+                Plus plus = new Plus.Builder(GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential).setApplicationName("socialmediator").build();
+                // TODO: this retrieves the user's posts, but not their friends'
+                // Possible solution: iterate friends list and get public collections
+                Plus.Activities.List listActivities = plus.activities().list("+google", "public");
+                ActivityFeed activityFeed = listActivities.execute();
+                List<Activity> activities = activityFeed.getItems();
+                // https://developers.google.com/+/web/api/rest/latest/activities/list
+                return activities.stream().filter(p -> p.getTitle().contains("#" + tag)).map(GoogleSocialNetworkPost::new).collect(Collectors.toList());
+            }
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public boolean isAuthorized(Principal principal) {
         return userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.google) != null;
     }

@@ -8,5 +8,6 @@ import java.util.List;
 public interface SocialNetworkService {
 
     List<SocialNetworkPost> getLatestPosts(Principal principal);
+    List<SocialNetworkPost> getLatestPostsByTag(Principal principal, String tag);
     boolean isAuthorized(Principal principal);
 }
