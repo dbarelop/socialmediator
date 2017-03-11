@@ -1,0 +1,47 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+.cursor-on{
+	cursor: pointer;
+}
+.alpha-on:hover{
+	opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.alpha-on:active{
+	opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.images-share{
+	height: 50px;
+	width: 50px;
+	 padding: 0px 25px 20px 0px;
+	cursor: pointer;
+}
+.images-share{
+	height: 50px;
+	width: 50px;
+	 padding: 0px 25px 20px 0px;
+	cursor: pointer;
+	   
+}
+
+
+.user-link{
+	cursor: pointer;
+
+}
+p.user-link:hover{
+	text-decoration: underline;
+}
