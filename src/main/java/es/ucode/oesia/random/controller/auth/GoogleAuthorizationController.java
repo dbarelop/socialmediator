@@ -1,43 +1,43 @@
 package es.ucode.oesia.random.controller.auth;
 
-import es.ucode.oesia.random.service.TwitterServiceImpl;
+import es.ucode.oesia.random.service.GoogleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import twitter4j.TwitterException;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.URI;
+import java.security.GeneralSecurityException;
 import java.security.Principal;
 
 @RestController
-public class TwitterAuthorizationController {
+public class GoogleAuthorizationController {
 
     @Autowired
-    private TwitterServiceImpl twitterService;
+    private GoogleServiceImpl googleService;
 
-    @GetMapping("/auth/twitter")
-    public ResponseEntity<?> requestAuthorization(Principal principal) throws TwitterException {
-        if (twitterService.isAuthorized(principal)) {
+    @GetMapping("/auth/google")
+    public ResponseEntity<?> requestAuthorization(Principal principal, HttpServletRequest request) throws GeneralSecurityException, IOException {
+        if (googleService.isAuthorized(principal)) {
             return new ResponseEntity<>("Already authorized", HttpStatus.OK);
         } else {
-            String url = twitterService.getAuthorizationURL();
+            String requestURL = request.getRequestURL().toString();
+            String url = googleService.getAuthorizationURL(principal, requestURL);
             return new ResponseEntity<>(new AuthorizationURL(url), HttpStatus.OK);
         }
     }
 
-    @GetMapping("/auth/twitter/callback")
+    @GetMapping("/auth/google/callback")
     public ResponseEntity<Void> doAuthorize(Principal principal,
-                                            @RequestParam("oauth_token") String oauthToken,
-                                            @RequestParam("oauth_verifier") String oauthVerifier) throws TwitterException {
-        twitterService.authorize(principal, oauthVerifier);
+                                            @RequestParam("code") String authorizationCode) throws IOException, GeneralSecurityException {
+        googleService.authorize(principal, authorizationCode);
         HttpHeaders h = new HttpHeaders();
         h.setLocation(URI.create("/"));
         return new ResponseEntity<>(h, HttpStatus.TEMPORARY_REDIRECT);
     }
-
 }
