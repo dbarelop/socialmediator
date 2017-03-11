@@ -1,7 +1,9 @@
 package es.ucode.oesia.random.service;
 
+import es.ucode.oesia.random.domain.FacebookSocialNetworkPost;
 import es.ucode.oesia.random.domain.SocialNetwork;
 import es.ucode.oesia.random.domain.SocialNetworkPost;
+import es.ucode.oesia.random.domain.TwitterSocialNetworkPost;
 import es.ucode.oesia.random.repository.UserSocialNetworksRepository;
 import facebook4j.*;
 import facebook4j.auth.AccessToken;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FacebookServiceImpl implements SocialNetworkService {
@@ -27,10 +30,7 @@ public class FacebookServiceImpl implements SocialNetworkService {
             if (accessToken != null) {
                 fb.setOAuthAccessToken(accessToken);
                 ResponseList<Post> posts = fb.getFeed();
-                for (Post p : posts) {
-                    System.out.println(p.getMessage());
-                }
-                // TODO: complete
+                return posts.stream().map(FacebookSocialNetworkPost::new).collect(Collectors.toList());
             }
         } catch (FacebookException e) {
             e.printStackTrace();
