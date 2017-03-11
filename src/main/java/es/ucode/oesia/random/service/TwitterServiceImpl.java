@@ -2,6 +2,7 @@ package es.ucode.oesia.random.service;
 
 import es.ucode.oesia.random.domain.SocialNetwork;
 import es.ucode.oesia.random.domain.SocialNetworkPost;
+import es.ucode.oesia.random.domain.TwitterSocialNetworkPost;
 import es.ucode.oesia.random.repository.UserSocialNetworksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import twitter4j.auth.RequestToken;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TwitterServiceImpl implements SocialNetworkService {
@@ -29,10 +31,7 @@ public class TwitterServiceImpl implements SocialNetworkService {
             if (accessToken != null) {
                 twitter.setOAuthAccessToken(accessToken);
                 List<Status> statuses = twitter.getHomeTimeline();
-                for (Status s : statuses) {
-                    System.out.println(s.getText());
-                }
-                // TODO: complete
+                return statuses.stream().map(TwitterSocialNetworkPost::new).collect(Collectors.toList());
             }
         } catch (TwitterException e) {
             e.printStackTrace();
