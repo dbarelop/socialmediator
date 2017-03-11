@@ -26,3 +26,4 @@ nbdist/
 
 /src/main/resources/application.properties
 /src/main/resources/twitter4j.properties
+.nb-gradle-properties
