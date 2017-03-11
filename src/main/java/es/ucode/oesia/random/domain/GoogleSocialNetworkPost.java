@@ -23,5 +23,6 @@ public class GoogleSocialNetworkPost extends SocialNetworkPost {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        super.setSocialNetwork(SocialNetwork.google.name());
     }
 }

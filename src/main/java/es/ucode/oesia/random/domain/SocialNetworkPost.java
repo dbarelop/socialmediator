@@ -14,6 +14,7 @@ public abstract class SocialNetworkPost {
     private Date date;
     private URL url;
     private SocialNetworkUser creator;
+    private String socialNetwork;
 
     public String getText() {
         return text;
@@ -45,6 +46,14 @@ public abstract class SocialNetworkPost {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getSocialNetwork() {
+        return socialNetwork;
+    }
+
+    public void setSocialNetwork(String socialNetwork) {
+        this.socialNetwork = socialNetwork;
     }
 
     public URL getUrl() {

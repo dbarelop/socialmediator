@@ -11,6 +11,7 @@ public class FacebookSocialNetworkPost extends SocialNetworkPost {
         //super.setTaggedUsers(...);
         super.setTags(post.getMessage() != null ? getTags(post.getMessage()) : null);
         super.setText(post.getMessage());
+        super.setSocialNetwork(SocialNetwork.facebook.name());
         //super.setUrl(???);
     }
 }

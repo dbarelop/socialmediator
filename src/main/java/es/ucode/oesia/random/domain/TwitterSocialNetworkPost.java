@@ -16,6 +16,7 @@ public class TwitterSocialNetworkPost extends SocialNetworkPost {
         super.setTaggedUsers(getTaggedUsers(tweet));
         super.setDate(tweet.getCreatedAt());
         super.setCreator(new TwitterSocialNetworkUser(tweet.getUser()));
+        super.setSocialNetwork(SocialNetwork.twitter.name());
     }
 
     private List<SocialNetworkUser> getTaggedUsers(Status tweet) {
