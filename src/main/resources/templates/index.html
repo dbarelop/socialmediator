@@ -22,7 +22,8 @@
         <ul>
             <li ng-repeat="sn in home.socialNetworks"><a href="/feed#?social_network={{sn}}">{{sn}}</a></li>
         </ul>
-        <button ng-click="home.authorizeTwitter()" class="btn btn-default">Add Twitter</button>
+        <button ng-click="home.authorizeTwitter()" class="btn btn-default">Authorize Twitter</button>
+        <button ng-click="home.authorizeFacebook()" class="btn btn-default">Authorize Facebook</button>
     </div>
 </body>
 </html>

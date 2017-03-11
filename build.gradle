@@ -33,6 +33,7 @@ dependencies {
     compile('org.springframework.security.oauth:spring-security-oauth2')
 
     compile('org.twitter4j:twitter4j-core:4.0.6')
+    compile('org.facebook4j:facebook4j-core:2.4.8')
 
 	compile('org.webjars:bootstrap:3.2.0')
 	compile('org.webjars:jquery:2.1.1')

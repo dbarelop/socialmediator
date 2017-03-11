@@ -39,14 +39,15 @@ public class TwitterServiceImpl implements SocialNetworkService {
         return null;
     }
 
+    @Override
     public boolean isAuthorized(Principal principal) {
         return userSocialNetworksRepository.findByUserAndSocialNetwork(principal.getName(), SocialNetwork.twitter) != null;
     }
 
-    public RequestToken getRequestToken() throws TwitterException {
+    public String getAuthorizationURL() throws TwitterException {
         Twitter twitter = TwitterFactory.getSingleton();
         RequestToken requestToken = twitter.getOAuthRequestToken();
-        return requestToken;
+        return requestToken.getAuthorizationURL();
     }
 
     public void authorize(Principal principal, String oauthVerifier) throws TwitterException {
