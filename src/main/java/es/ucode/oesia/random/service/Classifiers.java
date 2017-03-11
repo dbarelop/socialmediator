@@ -2,6 +2,7 @@ package es.ucode.oesia.random.service;
 
 import com.aliasi.classify.DynamicLMClassifier;
 import com.aliasi.classify.JointClassifier;
+import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.util.AbstractExternalizable;
 import es.ucode.oesia.random.domain.SocialNetworkPost;
 import java.io.IOException;
@@ -62,7 +63,10 @@ public class Classifiers {
         if(index==-1){
             index = categories.size();
             categories.add(category);
-            clasifiers.add(DynamicLMClassifier.createNGramBoundary(CATEGORIES_YES_NO,NGRAM));
+            DynamicLMClassifier<NGramBoundaryLM> clasifier = DynamicLMClassifier.createNGramBoundary(CATEGORIES_YES_NO,NGRAM);
+            //clasifier.resetCategory(CATEGORIES_YES_NO[0], new NGramBoundaryLM(6), 999);
+            //lasifier.resetCategory(CATEGORIES_YES_NO[1], new NGramBoundaryLM(6), 1);
+            clasifiers.add(clasifier);
             compiled_clasifiers.add(null);
             compileClassifier(index);
         }

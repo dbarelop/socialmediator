@@ -56,7 +56,7 @@ public class FilterByLucene implements FilterService{
             DirectoryReader ireader = DirectoryReader.open(directory);
             IndexSearcher isearcher = new IndexSearcher(ireader);
             // Parse a simple query that searches for "text":
-            Query query = new FuzzyQuery(new Term("text", parameter));
+            Query query = new FuzzyQuery(new Term("text", parameter),1);
             //QueryParser parser = new QueryParser("text", analyzer);
             /*
             try {
