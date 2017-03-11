@@ -30,6 +30,14 @@ angular.module('app', [])
                 console.log('Twitter auth failed');
             });
         };
+        self.authorizeFacebook = function() {
+            $http.get('/auth/facebook').success(function(data) {
+                $window.location.href = data.url;
+            }).error(function(data) {
+                console.log(data);
+                console.log('Facebook auth failed');
+            });
+        };
     }])
     .controller('feed', ['$http', '$location', function($http, $location) {
         var self = this;
