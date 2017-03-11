@@ -1,6 +1,7 @@
 angular.module('app', [])
     .controller('home', ['$http', '$location', '$window', function($http, $location, $window) {
         var self = this;
+        self.activeTab = 'home';
         $http.get('/user').success(function(data) {
             self.user = data.userAuthentication.details.name;
             self.authenticated = true;
@@ -49,10 +50,20 @@ angular.module('app', [])
     }])
     .controller('feed', ['$http', '$location', function($http, $location) {
         var self = this;
+        self.activeTab = 'feed';
         var social_network = $location.search().social_network;
         $http.get(social_network ? '/posts/' + social_network + '/latest' : '/posts/latest').success(function(data) {
             self.posts = data;
         }).error(function() {
             console.log('Error getting posts');
         });
+        self.logout = function() {
+            $http.post('/logout', {}).success(function() {
+                self.authenticated = false;
+                $location.path('/');
+            }).error(function(data) {
+                console.log('Logout failed');
+                self.authenticated = false;
+            });
+        };
     }]);

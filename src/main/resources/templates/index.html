@@ -7,27 +7,55 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-social/5.0.0/bootstrap-social.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 
     <script type="text/javascript" th:src="@{/webjars/angularjs/1.4.3/angular.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/app/app.js}"></script>
 </head>
 <body ng-app="app" ng-controller="home as home">
-    <div class="container" ng-show="!home.authenticated">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Welcome to SocialMediator</h1>
+    <nav class="navbar navbar-inverse navbar-fixed-top" ng-show="home.authenticated">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">SocialMediator</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{'active': home.activeTab == 'main'}"><a href="/">Main</a></li>
+                    <li ng-class="{'active': home.activeTab == 'feed'}"><a href="/feed">Feed</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{'active': home.activeTab == 'profile'}"><a href="/perfil">Profile</a></li>
+                    <li>
+                        <div class="btn-nav">
+                            <button ng-click="home.logout()" class="btn btn-primary btn-small navbar-btn">Logout</button>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <a href="/login" class="btn btn-block btn-social btn-github"><span class="fa fa-github"></span> Login with GitHub</a>
+    </nav>
+    <div class="container" ng-show="!home.authenticated">
+        <div style="margin-top: 50px;" class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2>Welcome to SocialMediator</h2></div>
+                    <div class="panel-body">
+                        <div>
+                            <a href="/login" class="btn btn-block btn-social btn-github"><span class="fa fa-github"></span> Login with GitHub</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="container" ng-show="home.authenticated">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-9">
                 <h2>Logged in as: <span ng-bind="home.user"></span></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3>Registered social networks</h3></div>
                     <div class="panel-body">
@@ -37,14 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="pull-right">
-                    <button ng-click="home.logout()" class="btn btn-default">Logout</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 pull-right">
                 <button ng-click="home.authorizeTwitter()" class="btn btn-block btn-social btn-twitter"><span class="fa fa-twitter"></span> Authorize Twitter</button>
                 <button ng-click="home.authorizeFacebook()" class="btn btn-block btn-social btn-facebook"><span class="fa fa-facebook"></span> Authorize Facebook</button>
                 <button ng-click="home.authorizeGoogle()" class="btn btn-block btn-social btn-google"><span class="fa fa-google"></span> Authorize Google</button>
