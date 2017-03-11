@@ -6,11 +6,17 @@
 
     <script type="text/javascript" src="/webjars/angularjs/1.4.3/angular.min.js"></script>
     <script type="text/javascript">
-        angular.module("app", []).controller("home", function($http) {
+        angular.module("app", []).controller("home", function($http, $location, $window) {
             var self = this;
             $http.get("/user").success(function(data) {
                 self.user = data.userAuthentication.details.name;
                 self.authenticated = true;
+                $http.get("/user/socialnetworks").success(function(data) {
+                    console.log(data);
+                    self.socialNetworks = data;
+                }).error(function() {
+                    console.log("Error getting user's social networks");
+                });
             }).error(function() {
                 self.user = "N/A";
                 self.authenticated = false;
@@ -22,6 +28,14 @@
                 }).error(function(data) {
                     console.log("Logout failed");
                     self.authenticated = false;
+                });
+            };
+            self.authorizeTwitter = function() {
+                $http.get("/auth/twitter").success(function(data) {
+                    $window.location.href = data.url;
+                }).error(function(data) {
+                    console.log(data);
+                    console.log("Auth Twitter failed");
                 });
             };
         });
@@ -36,6 +50,11 @@
         <div>
             <button ng-click="home.logout()" class="btn btn-primary">Logout</button>
         </div>
+        Registered social networks:
+        <ul>
+            <li ng-repeat="sn in home.socialNetworks">{{sn}}</li>
+        </ul>
+        <button ng-click="home.authorizeTwitter()">Add Twitter</button>
     </div>
 </body>
 </html>
