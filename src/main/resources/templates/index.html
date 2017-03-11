@@ -20,7 +20,7 @@
         </div>
         Registered social networks:
         <ul>
-            <li ng-repeat="sn in home.socialNetworks"><a href="/posts/{{sn}}/latest">{{sn}}</a></li>
+            <li ng-repeat="sn in home.socialNetworks"><a href="/feed#?social_network={{sn}}">{{sn}}</a></li>
         </ul>
         <button ng-click="home.authorizeTwitter()" class="btn btn-default">Add Twitter</button>
     </div>
