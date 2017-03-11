@@ -9,8 +9,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="/static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
 </head>
-<body>
+<body ng-app="app" ng-controller="home as home">
  
   <!-- Navbar goes here -->
 
@@ -70,7 +71,7 @@
         </div>
       </div>
       <!--log in-->
-      <div class="card ">
+      <div class="card " ng-show="!home.authenticated">
             <div class="card-content black-text">
             <div class="row">
             
@@ -84,15 +85,13 @@
             <div class="row">
                 <input class="col s6 offset-s3" placeholder="password" type="password"/>
             
-           <div class="col s6 offset-s3">
-            <button class="col s6 btn-flat">log in</button>
-            <button class="col s6 btn-flat">log out</button>
+           <div class="col s6 offset-s3" >
+            <button class="col s6 btn-flat" href="/Login">log in</button>
             </div>
          </div>
           </div>
           </div>
         
-     
 
 
 
@@ -105,8 +104,8 @@
     
     
       <ul class="collection grey ">
-      <li class="collection-item grey">Facebook<i id="facebook" class="material-icons tiny cursor-on right" onclick="createChips(this.id)">add</i></li>
-      <li class="collection-item grey">Twitter<i id="twitter" class="material-icons tiny  cursor-on right" onclick="createChips(this.id)" >add</i></li>
+      <li class="collection-item grey">Facebook<i id="facebook" class="material-icons tiny cursor-on right"  onclick="createChips(this.id)">add</i></li>
+      <li class="collection-item grey">Twitter<i id="twitter" class="material-icons tiny  cursor-on right" ng-click="home.authorizeTwitter(this.id)" >add</i></li>
       <li class="collection-item grey">Youtube<i id="youtube" class="material-icons tiny cursor-on right" onclick="createChips(this.id)">add</i></li>
       <li class="collection-item grey">Instagram<i id="Instagram" class="material-icons tiny cursor-on right" onclick="createChips(this.id)">add</i></li>
       </ul>
@@ -226,6 +225,8 @@
   <script src="/static/js/materialize.js"></script>
   <script src="/static/js/init.js"></script>
   <script src="/static/js/init_2.js"></script>
+  <script type="text/javascript" th:src="@{/webjars/angularjs/1.4.3/angular.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/app/app.js}"></script>
 
   </body>
 </html>
