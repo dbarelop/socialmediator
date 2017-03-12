@@ -20,6 +20,11 @@ public class TwitterSocialNetworkUser extends SocialNetworkUser {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        try {
+            super.setProfileURL(new URL("https://twitter.com/" + user.getScreenName()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

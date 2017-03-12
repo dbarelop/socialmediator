@@ -8,6 +8,7 @@ public abstract class SocialNetworkUser {
     private String name;
     private String email;
     private URL picture;
+    private URL profileURL;
 
     public String getUsername() {
         return username;
@@ -39,5 +40,13 @@ public abstract class SocialNetworkUser {
 
     public void setPicture(URL picture) {
         this.picture = picture;
+    }
+
+    public URL getProfileURL() {
+        return profileURL;
+    }
+
+    public void setProfileURL(URL profileURL) {
+        this.profileURL = profileURL;
     }
 }

@@ -11,5 +11,6 @@ public class GoogleSocialNetworkUser extends SocialNetworkUser {
         super.setName(actor.getName() != null ? actor.getName().toPrettyString() : null);
         super.setPicture(new URL(actor.getImage().getUrl()));
         super.setUsername(actor.getDisplayName());
+        super.setProfileURL(new URL(actor.getUrl()));
     }
 }

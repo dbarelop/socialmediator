@@ -83,4 +83,8 @@ angular.module('app', [])
                 console.log('Error getting posts page #' + self.page);
             });
         };
+        self.filter = function() {
+            self.posts = [];
+            $http.get('/posts/latest')
+        };
     }]);
