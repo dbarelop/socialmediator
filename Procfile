@@ -1,1 +1,1 @@
-web java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/socialmediator-0.0.1-SNAPSHOT.jar
+web java -Dserver.port=$PORT -Dsecurity.oauth2.client.client-id=$GITHUB_CLIENT_ID -Dsecurity.oauth2.client.client-secret=$GITHUB_CLIENT_SECRET -Dfacebook4j.oauth.appId=$FB_APPID -Dfacebook4j.oauth.appSecret=$FB_APPSECRET -Dtwitter4j.oauth.consumerKey=$TWITTER_CONSUMERKEY -Dtwitter4j.oauth.consumerSecret=$TWITTER_CONSUMERSECRET $JAVA_OPTS -jar build/libs/socialmediator-0.0.1-SNAPSHOT.jar
