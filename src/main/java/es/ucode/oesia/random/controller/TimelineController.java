@@ -9,6 +9,7 @@ import es.ucode.oesia.random.service.TwitterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -27,8 +28,20 @@ public class TimelineController {
     private GoogleServiceImpl googleService;
 
     @GetMapping("/posts/latest")
-    public List<SocialNetworkPost> getLatestPosts(Principal principal) {
-        return socialNetworksService.getLatestPosts(principal);
+    public List<SocialNetworkPost> getLatestPosts(Principal principal,
+                                                  @RequestParam(value = "socialNetwork", required = false) SocialNetwork socialNetwork,
+                                                  @RequestParam(value = "tag", required = false) String tag) {
+        if (socialNetwork != null) {
+            switch (socialNetwork) {
+                case twitter:
+                    return tag != null ? twitterService.getLatestPostsByTag(principal, tag) : twitterService.getLatestPosts(principal);
+                case facebook:
+                    return tag != null ? facebookService.getLatestPostsByTag(principal, tag) : facebookService.getLatestPosts(principal);
+                case google:
+                    return tag != null ? googleService.getLatestPostsByTag(principal, tag) :  googleService.getLatestPosts(principal);
+            }
+        }
+        return tag != null ? socialNetworksService.getLatestPostsByTag(principal, tag) : socialNetworksService.getLatestPosts(principal);
     }
 
     @GetMapping("/posts/page/{page}")
@@ -36,36 +49,4 @@ public class TimelineController {
         return socialNetworksService.getPosts(principal, page);
     }
 
-    @GetMapping("/posts/{socialNetwork}/latest")
-    public List<SocialNetworkPost> getLatestPosts(Principal principal, @PathVariable("socialNetwork") SocialNetwork socialNetwork) {
-        switch (socialNetwork) {
-            case twitter:
-                return twitterService.getLatestPosts(principal);
-            case facebook:
-                return facebookService.getLatestPosts(principal);
-            case google:
-                return googleService.getLatestPosts(principal);
-        }
-        return null;
-    }
-
-    @GetMapping("/tag/{tag}/latest")
-    public List<SocialNetworkPost> getLatestPostsByTag(Principal principal, @PathVariable("tag") String tag) {
-        return socialNetworksService.getLatestPostsByTag(principal, tag);
-    }
-
-    @GetMapping("/{socialNetwork}/tag/{tag}/latest")
-    public List<SocialNetworkPost> getLatestPostsByTag(Principal principal,
-                                                       @PathVariable("socialNetwork") SocialNetwork socialNetwork,
-                                                       @PathVariable("tag") String tag) {
-        switch (socialNetwork) {
-            case twitter:
-                return twitterService.getLatestPostsByTag(principal, tag);
-            case facebook:
-                return facebookService.getLatestPostsByTag(principal, tag);
-            case google:
-                return googleService.getLatestPostsByTag(principal, tag);
-        }
-        return null;
-    }
 }

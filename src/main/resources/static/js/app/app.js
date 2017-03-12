@@ -52,8 +52,11 @@ angular.module('app', [])
         var self = this;
         self.activeTab = 'feed';
         self.page = 1;
+        self.tagFilter = '';
         var social_network = $location.search().social_network;
-        $http.get(social_network ? '/posts/' + social_network + '/latest' : '/posts/latest').success(function(data) {
+        var url = '/posts/latest';
+        url += social_network ? '?socialNetwork=' + social_network : '';
+        $http.get(url).success(function(data) {
             self.posts = data;
         }).error(function() {
             console.log('Error getting posts');
@@ -85,6 +88,13 @@ angular.module('app', [])
         };
         self.filter = function() {
             self.posts = [];
-            $http.get('/posts/latest')
+            var url = '/posts/latest';
+            url += social_network ? '?socialNetwork=' + social_network : (self.tagFilter ? '?tag=' + self.tagFilter : '');
+            url += self.tagFilter ? '&tag=' + self.tagFilter : '';
+            $http.get(url).success(function(data) {
+                self.posts = data;
+            }).error(function() {
+                console.log('Error filtering posts');
+            });
         };
     }]);

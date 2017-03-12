@@ -43,6 +43,17 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3>Filters</h3></div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <input type="text" placeholder="Tag" class="form-control" ng-model="feed.tagFilter" />
+                            <span class="input-group-btn"><button class="btn btn-primary" type="button" ng-click="feed.filter()">Go</button></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <nav style="margin-left: 20px; margin-right: 20px;">
